@@ -1,0 +1,3 @@
+[submodule "general_utils"]
+	path = general_utils
+	url = git@github.com:ravi0131/utilities-library.git
