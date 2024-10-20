@@ -1,6 +1,6 @@
 import pandas as pd
 import numpy as np
-        
+from typing import Tuple
 def _random_beam_drop(points: np.ndarray) -> np.ndarray:
     """
     Randomly drop beams from the point cloud data
@@ -17,7 +17,6 @@ def _random_beam_drop(points: np.ndarray) -> np.ndarray:
     """
     # Randomly select a beam drop ratio from [1, 2, 3]
     beam_drop_ratio = np.random.choice([1, 2, 3])
-    
     # Randomly select a starting beam index
     start_index = np.random.randint(0, beam_drop_ratio)
 
@@ -27,7 +26,7 @@ def _random_beam_drop(points: np.ndarray) -> np.ndarray:
 
 
 
-def _spherical_coordinates_conversion(points: np.ndarray) -> tuple[np.ndarray, np.ndarray]:
+def _spherical_coordinates_conversion(points: np.ndarray) -> Tuple[np.ndarray, np.ndarray]:
     """"
     Converts 3D points from Euclidean (x, y, z) to spherical coordinates (theta, phi, radial_dist).
 
@@ -77,7 +76,6 @@ def _random_spherical_drop(points: np.ndarray) -> np.ndarray:
     
     # Randomly sample spherical drop ratio
     spherical_drop_ratio = np.random.choice([1, 2])
-    
     # Apply the ray-dropping condition in the spherical coordinates
     theta_mask = (theta_grid % spherical_drop_ratio == 0)
     phi_mask = (phi_grid % spherical_drop_ratio == 0)
