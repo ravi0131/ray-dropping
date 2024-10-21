@@ -105,3 +105,32 @@ def drop_rays(points: np.ndarray) -> np.ndarray:
     points_after_spherical_drop = _random_spherical_drop(points_after_beam_drop)
     
     return points_after_spherical_drop
+
+from typing import Tuple
+import numpy as np
+def filter_points_in_ROI(points: np.ndarray, beam_ids: np.ndarray, x_range: Tuple[int, int], y_range: Tuple[int, int]) -> Tuple[np.ndarray, np.ndarray]:
+    """
+    Filter out points and corresponding beam IDs that are not in the region of interest (ROI).
+    
+    Parameters:
+        points: np.ndarray
+        beam_ids: np.ndarray
+        x_range: Tuple[int, int]  # Range of x values (longitudinal axis)
+        y_range: Tuple[int, int]  # Range of y values (lateral axis)
+        
+    Returns:
+        Tuple of filtered points and corresponding beam IDs in the region of interest.
+    """
+    # Define the ROI boundaries
+    x_min, x_max = x_range[0], x_range[1]   # Longitudinal (x-axis)
+    y_min, y_max = y_range[0], y_range[1]   # Lateral (y-axis)
+
+    # Apply the conditions to filter the points within the ROI
+    in_roi = (points[:, 0] >= x_min) & (points[:, 0] <= x_max) & \
+             (points[:, 1] >= y_min) & (points[:, 1] <= y_max)
+        
+    # Use the conditions to index the original points and beam IDs arrays
+    filtered_points = points[in_roi]
+    filtered_beam_ids = beam_ids[in_roi]
+
+    return filtered_points, filtered_beam_ids
